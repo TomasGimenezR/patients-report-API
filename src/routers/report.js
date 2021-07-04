@@ -19,9 +19,9 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.get('/reportDate', async (req, res) => {
+router.get('/:reportDate', async (req, res) => {
     let report = await Report.findOne({ date: req.params.reportDate })
-    if (!patient) {
+    if (!report) {
         console.log('[!!] THE REPORT COULD NOT BE FOUND, DATE:', req.params.reportDate)
         res.status(404).send()
     }
@@ -40,21 +40,22 @@ router.get('/reportDate', async (req, res) => {
 //     res.send(patient)
 // })
 
-// router.delete('/:patientId', async (req, res) => {
-//     try {
-//         let code = req.params.patientId
-//         let patient = await Patient.findOneAndDelete({ code })
+router.delete('/:reportDate', async (req, res) => {
+    try {
+        let date = req.params.reportDate
+        let report = await Report.findOneAndDelete({ date })
 
-//         if (!patient) {
-//             console.log('[!!] NO PATIENT FOUND WITH CODE', code)
-//             res.status(404).send()
-//         }
-//         console.log('[-] PATIENT SUCCESSFULLY DELETED, PATIENT:', patient)
-//         res.send(patient)
-//     } catch (e) {
-//         console.log('[!!] AN ERROR OCCURRED ATTEMPTING TO DELETE PATIENT WITH CODE', code)
-//         res.status(500).send()
-//     }
-// })
+        if (!report) {
+            console.log('[!!] NO REPORT FOUND WITH DATE', date)
+            res.status(404).send()
+        } else {
+            console.log('[-] REPORT SUCCESSFULLY DELETED, REPORT:', report)
+            res.send(report)
+        }
+    } catch (e) {
+        console.log(`[!!] AN ERROR OCCURRED ATTEMPTING TO DELETE REPORT WITH DATE ${date}:`, e)
+        res.status(500).send(e)
+    }
+})
 
 module.exports = router

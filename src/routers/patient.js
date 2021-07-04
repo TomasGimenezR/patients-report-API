@@ -49,8 +49,8 @@ router.delete('/:patientId', async (req, res) => {
         console.log('[-] PATIENT SUCCESSFULLY DELETED, PATIENT:', patient)
         res.send(patient)
     } catch (e) {
-        console.log('[!!] AN ERROR OCCURRED ATTEMPTING TO DELETE PATIENT WITH CODE', code)
-        res.status(500).send()
+        console.log(`[!!] AN ERROR OCCURRED ATTEMPTING TO DELETE PATIENT WITH CODE ${code}:`, e)
+        res.status(500).send(e)
     }
 })
 

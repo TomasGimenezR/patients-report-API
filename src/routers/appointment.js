@@ -48,8 +48,8 @@ router.delete('/:appointmentId', async (req, res) => {
         console.log('[-] APPOINTMENT SUCCESSFULLY DELETED, PATIENT:', appointment)
         res.send(appointment)
     } catch (e) {
-        console.log('[!!] AN ERROR OCCURRED ATTEMPTING TO DELETE APPOINTMENT WITH CODE', code)
-        res.status(500).send()
+        console.log(`[!!] AN ERROR OCCURRED ATTEMPTING TO DELETE APPOINTMENT WITH CODE ${code}:`, e)
+        res.status(500).send(e)
     }
 })
 
